@@ -7,7 +7,6 @@
 package behavior
 
 import (
-	"errors"
 	"sync"
 )
 
@@ -32,24 +31,21 @@ func (proj *Project) Init(conf ProjectConfig) error {
 	return nil
 }
 
-func (proj *Project) GetTree(id string) (*Tree, error) {
+func (proj *Project) GetTree(id string) *Tree {
 
 	tree, ok := proj.trees.Load(id)
 	if ok {
-		return tree.(*Tree), nil
+		return tree.(*Tree)
 	}
-	var t *Tree
+	var rTree *Tree
 	proj.trees.Range(func(_, tree interface{}) bool {
 		if tree.(*Tree).Conf.ID == id {
-			t = tree.(*Tree)
+			rTree = tree.(*Tree)
 			return false
 		}
 		return true
 	})
-	if t != nil {
-		return t, nil
-	}
-	return nil, errors.New("未找到树 " + id)
+	return rTree
 }
 
 func (proj *Project) GetTreeByName(name string) *Tree {

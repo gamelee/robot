@@ -8,6 +8,7 @@ package robot
 
 import (
 	"encoding/json"
+	"errors"
 	"github.com/gamelee/robot/behavior"
 	"github.com/gamelee/robot/connect"
 	"github.com/gamelee/robot/di"
@@ -82,9 +83,9 @@ func (rob *Robot) Reload(conf behavior.ProjectConfig, data map[string]interface{
 // @return error
 func (rob *Robot) Run(treeID string) error {
 	rob.LastTree = treeID
-	tree, err := rob.GetTree(rob.LastTree)
+	tree := rob.GetTree(rob.LastTree)
 	if tree == nil {
-		return err
+		return errors.New("未找到行为树: " + treeID)
 	}
 	rob.Data, rob.Err = tree.Run(rob.Injector)
 	return rob.Err
