@@ -3,7 +3,6 @@ package behavior
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gamelee/robot"
 	"os"
 )
 
@@ -45,9 +44,4 @@ type NodeConfig struct {
 	Title      string                 `json:"title,omitempty"`
 	Children   []string               `json:"children,omitempty"`
 	Properties map[string]interface{} `json:"properties,omitempty"`
-}
-
-func (nc *NodeConfig) String() string {
-	buf, _ := json.Marshal(nc)
-	return robot.Bytes2String(buf)
 }
