@@ -3,10 +3,10 @@ package connect
 import (
 	"errors"
 	"fmt"
-	"github.com/gamelee/robot"
 	"io"
 	"log"
 	"net"
+	"runtime"
 	"sync"
 	"time"
 
@@ -280,17 +280,17 @@ func (h *Hub) startClient(w *wrap) (err error) {
 
 	// 读消息循环
 	go func() {
-		robot.Recovery(func() error {
+		recovery(func() error {
 			return w.reader(h.ch)
 		})
 	}()
 	go func() {
-		robot.Recovery(func() error {
+		recovery(func() error {
 			return w.writer(h.ch)
 		})
 	}()
 	go func() {
-		robot.Recovery(func() error {
+		recovery(func() error {
 			return w.heartbeat(h.ch)
 		})
 	}()
@@ -301,4 +301,19 @@ func (h *Hub) startClient(w *wrap) (err error) {
 
 func (h *Hub) EventChan() chan *Message {
 	return h.ch
+}
+
+func recovery(f func() error) (err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = fmt.Errorf("%v", r)
+		}
+		if err != nil {
+			buf := make([]byte, 64<<10)
+			buf = buf[:runtime.Stack(buf, false)]
+			err = fmt.Errorf("error: %w;\ntrace: %v", err, bytes2String(buf))
+		}
+	}()
+	err = f()
+	return
 }

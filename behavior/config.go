@@ -3,21 +3,21 @@ package behavior
 import (
 	"encoding/json"
 	"fmt"
-	"os"
+	"io"
 )
 
 // ProjectConfig 原生工程json类型
 type ProjectConfig map[string]*TreeConfig
 
 // LoadProjectConfig 加载原生工程
-func LoadProjectConfig(path string) (ProjectConfig, error) {
+func LoadProjectConfig(r io.Reader) (ProjectConfig, error) {
 
 	var project ProjectConfig
-	file, err := os.ReadFile(path)
+	buf, err := io.ReadAll(r)
 	if err != nil {
 		return nil, err
 	}
-	err = json.Unmarshal(file, &project)
+	err = json.Unmarshal(buf, &project)
 	if err != nil {
 		fmt.Println("parse failed", err)
 		return nil, err

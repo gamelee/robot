@@ -1,8 +1,9 @@
 package connect
 
 import (
-	"github.com/gamelee/robot"
+	"encoding/json"
 	"sync"
+	"unsafe"
 )
 
 type MessageType string
@@ -34,7 +35,7 @@ func NewSysMessage(from string, id interface{}, data interface{}) *Message {
 }
 
 func (m *Message) String() string {
-	str, _ := robot.JsonEncodeString(m)
+	str, _ := jsonEncodeString(m)
 	return str
 }
 
@@ -69,4 +70,20 @@ func (mr *MessageReg) GetOrReg(id interface{}, ch chan *Message) chan *Message {
 
 func (mr *MessageReg) Range(fn func(k, v interface{}) bool) {
 	mr.m.Range(fn)
+}
+
+func jsonEncode(v interface{}) ([]byte, error) {
+	return json.Marshal(v)
+}
+
+func jsonEncodeString(v interface{}) (string, error) {
+	b, err := jsonEncode(v)
+	if err != nil {
+		return "", err
+	}
+	return bytes2String(b), nil
+}
+
+func bytes2String(b []byte) string {
+	return *(*string)(unsafe.Pointer(&b))
 }

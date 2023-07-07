@@ -8,8 +8,8 @@ package invoker
 
 import (
 	"encoding/json"
-	"github.com/gamelee/robot"
 	"sync/atomic"
+	"unsafe"
 )
 
 type (
@@ -37,8 +37,24 @@ func NewCall(action string, message string, args ...interface{}) *Call {
 	return this
 }
 func (c *Call) String() string {
-	str, _ := robot.JsonEncodeString(c)
+	str, _ := jsonEncodeString(c)
 	return str
+}
+
+func jsonEncode(v interface{}) ([]byte, error) {
+	return json.Marshal(v)
+}
+
+func jsonEncodeString(v interface{}) (string, error) {
+	b, err := jsonEncode(v)
+	if err != nil {
+		return "", err
+	}
+	return bytes2String(b), nil
+}
+
+func bytes2String(b []byte) string {
+	return *(*string)(unsafe.Pointer(&b))
 }
 
 func NewCallRst(data []byte) *CallRst {
