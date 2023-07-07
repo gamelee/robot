@@ -17,7 +17,8 @@ type Project struct {
 	trees sync.Map
 }
 
-func (proj *Project) init() error {
+func (proj *Project) Init(conf ProjectConfig) error {
+	proj.Conf = conf
 	// 实例化行为树
 	for i := range proj.Conf {
 		treeConf := proj.Conf[i]
@@ -67,15 +68,9 @@ func (proj *Project) GetTreeByName(name string) *Tree {
 	return rTree
 }
 
-func NewProject(file string) (*Project, error) {
-	conf, err := LoadProjectConfig(file)
-	if err != nil {
-		return nil, err
-	}
+func NewProject() *Project {
 	p := &Project{
-		file:  file,
-		Conf:  conf,
 		trees: sync.Map{},
 	}
-	return p, p.init()
+	return p
 }
