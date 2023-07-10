@@ -19,36 +19,8 @@
 <script src="js/func.js" crossorigin></script>
 <script src="lib/json-editor/jsoneditor.js" crossorigin></script>
 <script src="js/storage.js" crossorigin></script>
-<script src="lib/monaco-editor/min/vs/loader.js" crossorigin></script>
 <script>
-    require.config({paths: {'vs': 'lib/monaco-editor/min/vs'}});
-    require(['vs/editor/editor.main'], function () {
-        // 定义编辑器主题
-        monaco.editor.defineTheme('ddchess', ddchess.js_editor_theme);
-        monaco.editor.setTheme('ddchess');
-
-        function newEditor(container_id, code, language) {
-            let model = monaco.editor.createModel(code, language);
-            return monaco.editor.create(document.getElementById(container_id), {
-                model: model,
-                minimap: {enabled: false},
-                language: 'javascript',
-                automaticLayout: true,
-            });
-        }
-
-        // 新建一个 div
-        function addNewEditor(code, language) {
-            let new_container = document.createElement("div");
-            new_container.id = "container";
-            new_container.className = "container";
-            document.getElementById("js-editor").appendChild(new_container);
-            return newEditor(new_container.id, code, language);
-        }
-
-        window.editor = addNewEditor("// 未找到代码", 'javascript');
-        // 运行
-        layui.config({base: ddchess.path.mod}).use(ddchess.path.index)
-    })
+    // 运行
+    layui.config({base: ddchess.path.mod}).use(ddchess.path.index)
 </script>
 </html>

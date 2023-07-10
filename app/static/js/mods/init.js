@@ -119,13 +119,8 @@ layui.define2(function (layer, $, notice) {
     })
 
     mod.$json_editor = $(`<div>`, {class: 'json-editor', style: "display: none", id: "init-json-editor"})
-    mod.$js_editor = $(`<div><div id="init-js-editor"></div></div>`).css("display", "none")
     $('body').append(mod.$json_editor, mod.$js_editor)
     mod.json_editor = new JSONEditor(mod.$json_editor[0], {mode: 'tree', mainMenuBar: true})
-    mod.js_editor = monaco.editor.create(mod.$js_editor.find("#init-js-editor")[0], {
-        model: monaco.editor.createModel("(function() {})()", 'javascript'),
-        minimap: {enabled: false},
-    })
 
     $.extend({
         json_editor: async function (obj, title, left = true) {
@@ -154,50 +149,16 @@ layui.define2(function (layer, $, notice) {
                 layer.close(idx)
             }, '65%', {btn: ["复制", "关闭"]});
         },
-        // @return true
-        js_editor: async function (js_code, title = "js 编辑器") {
-            return new Promise((resolve, reject) => {
-                let editor = {}
-                let cancel = true
-                if (window.ddchess._js_code_idx) {
-                    return
-                }
-
-                window.ddchess._js_code = js_code
-                window.ddchess._js_code_idx = layer.open_right(title, 'js_editor.html', undefined, '75%', {
-                    type: 2, success: (ctx, _) => {
-                        editor = ctx.find('iframe')[0].contentWindow.editor
-                    },
-                    zIndex: layer.zIndex,
-                    btn: ["保存", "删除"],
-                    btn1: (idx) => {
-                        layer.close(idx)
-                        cancel = false
-                        resolve(editor.getValue())
-                    },
-                    btn2: async (idx) => {
-                        cancel = false
-                        resolve(true)
-                    },
-                    end: () => {
-                        cancel && resolve(false)
-                        window.ddchess._js_code = ""
-                        window.ddchess._js_code_idx = 0
-                    }
-                })
-            })
-
-        }
     })
 
     function stopF5Refresh() {
         document.onkeydown = function (oEvent) {
-            var oEvent = oEvent || window.oEvent;
+            oEvent = oEvent || window.oEvent;
             //获取键盘的keyCode值
-            var nKeyCode = oEvent.keyCode || oEvent.which || oEvent.charCode;
+            let nKeyCode = oEvent.keyCode || oEvent.which || oEvent.charCode;
             //获取ctrl 键对应的事件属性
-            var bCtrlKeyCode = oEvent.ctrlKey || oEvent.metaKey;
-            if (oEvent.nKeyCode == 83 && bCtrlKeyCode) {
+            let bCtrlKeyCode = oEvent.ctrlKey || oEvent.metaKey;
+            if (oEvent?.nKeyCode === 83 && bCtrlKeyCode) {
                 alert('save');
                 //doSomeThing...
             }
