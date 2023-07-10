@@ -7,5 +7,4 @@ example/app/*.exe
 *.pb.go
 *.log
 *.test.go
-example/demo
-example/app/cache/*
+app/cache/*

@@ -299,7 +299,7 @@ func (h *Hub) startClient(w *wrap) (err error) {
 	return nil
 }
 
-func (h *Hub) EventChan() chan *Message {
+func (h *Hub) EventChan() <-chan *Message {
 	return h.ch
 }
 

@@ -31,6 +31,7 @@ func (fm *FuncManager) RegStruct(handle interface{}, filter func(structName, met
 	for rv.Kind() == reflect.Ptr {
 		rv = rv.Elem()
 	}
+
 	if rv.Kind() != reflect.Struct {
 		return errors.New("请传入结构体或结构体指针")
 	}

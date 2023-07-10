@@ -1,0 +1,9 @@
+{
+    "servers": {
+        "local": {},
+        "xxx": {
+            "Addr": "127.0.0.1:3063"
+        }
+    },
+    "select": "xxx"
+}

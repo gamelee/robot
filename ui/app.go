@@ -7,7 +7,6 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
-	"runtime"
 	"time"
 
 	"github.com/gamelee/robot/invoker"
@@ -44,9 +43,6 @@ func (wa *WebApp) init() {
 
 	args := make([]string, 0)
 	log.Printf("配置信息: %#v", wa.Config)
-	if runtime.GOOS == "linux" {
-		args = append(args, "--class=Lorca")
-	}
 	args = append(args, "--remote-allow-origins=*")
 	args = append(args, "--disable-automation")
 	go wa.fs.Run()
@@ -114,7 +110,6 @@ func (wa *WebApp) invoke(call *invoker.Call) *invoker.CallRst {
 
 func (wa *WebApp) CallJS(call *invoker.Call) *invoker.CallRst {
 	rst := new(invoker.CallRst)
-	//log.Println("calljs", call)
 	val := wa.ui.Eval(fmt.Sprintf("CallJS(%s)", call))
 	err := val.To(rst)
 	if err != nil {
@@ -124,6 +119,6 @@ func (wa *WebApp) CallJS(call *invoker.Call) *invoker.CallRst {
 	return rst
 }
 
-func (wa *WebApp) EvalJs(code string) lorca.Value {
+func (wa *WebApp) RunJS(code string) lorca.Value {
 	return wa.ui.Eval(code)
 }

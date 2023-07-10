@@ -1,0 +1,95 @@
+/* 自定义其他任意主题  */
+.class-layer-ddchess {
+    border: 1px solid #aaa;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, .3);
+    border-radius: 0;
+}
+
+.class-layer-ddchess .layui-layer-title {
+    height: 32px;
+    line-height: 32px;
+    padding-left: 8px;
+    border-bottom: none;
+    font-size: 12px;
+    background-color: var(--color-4);
+    color: var(--color-0);
+}
+
+.class-layer-ddchess .layui-layer-setwin {
+    right: 0;
+    top: 0;
+}
+
+.class-layer-ddchess .layui-layer-setwin span {
+    margin-left: 0;
+    padding: 8px;
+}
+
+.class-layer-ddchess.layui-layer-page .layui-layer-setwin span {
+    padding: 8px 11px;
+}
+
+.class-layer-ddchess .layui-layer-setwin span:hover {
+    background-color: var(--color-1);
+}
+
+.class-layer-ddchess .layui-layer-setwin span.layui-icon-close:hover {
+    background-color: var(--color-2);
+    color: var(--color-0);
+}
+
+.class-layer-ddchess .layui-layer-content {
+    background-color: var(--color-0);
+    color: var(--color-5);
+}
+
+.class-layer-ddchess .layui-layer-padding {
+    padding-top: 18px;
+    padding-left: 58px;
+}
+
+.class-layer-ddchess .layui-layer-btn {
+    padding-top: 0 !important;
+    padding: 0;
+    border-top: 1px solid #DFDFDF;
+    background-color: #F0F0F0;
+    height: 32px;
+    line-height: 32px;
+}
+
+.class-layer-ddchess .layui-layer-btn a {
+    height: 18px;
+    line-height: 18px;
+    background-color: #E1E1E1;
+    border-color: #ADADAD;
+    color: #000;
+    font-size: 12px;
+    transition: all .3s;
+}
+
+.class-layer-ddchess .layui-layer-btn a:hover {
+    border-color: #2A8EDD;
+    background-color: #E5F1FB;
+}
+
+.class-layer-ddchess .layui-prompt {
+    border: 0;
+    height: 32px;
+    line-height: 32px;
+    margin: 15px;
+    border-bottom: 1px black solid;
+}
+
+.layui-input, .layui-btn, .layui-textarea, .layui-select, .layui-tree-txt {
+    background-color: var(--color-0);
+    color: var(--color-5);
+}
+
+.layui-btn:hover {
+    background-color: var(--color-2);
+    color: var(--color-0);
+}
+
+.layui-btn-group + .layui-btn-group {
+    margin-left: 0;
+}

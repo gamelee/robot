@@ -1,6 +1,7 @@
 package behavior
 
 import (
+	"errors"
 	"fmt"
 	"github.com/gamelee/robot/di"
 )
@@ -57,6 +58,9 @@ func (tree *Tree) Load(data *TreeConfig, maps *RegisterStructMaps) error {
 }
 
 func (tree *Tree) Run(injector di.Injector) (rst interface{}, err error) {
+	if tree == nil {
+		return nil, errors.New("tree is nil")
+	}
 	return tree.Root.Run(injector)
 }
 

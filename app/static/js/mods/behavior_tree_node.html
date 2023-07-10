@@ -1,0 +1,32 @@
+<div class="layui-form-item">
+    <label class="layui-form-label">节点id</label>
+    <div class="layui-input-block">
+        <input id="id" title="id" type="text" name="id" required disabled autocomplete="off" class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">节点名称</label>
+    <div class="layui-input-block">
+        <input id="title" title="title" type="text" name="title" required autocomplete="off" class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">节点类型</label>
+    <div class="layui-input-block">
+        <select id="category" lay-filter="category" title="category" name="category">
+            <option value="action" type="leaf-node">动作</option>
+            <option value="composite" type="composite-node">组合</option>
+            <option value="decorator" type="decorator-node">包装</option>
+            <option value="reqs"  type="leaf-node">快捷请求</option>
+            <option value="custom"  type="leaf-node">自定义请求</option>
+        </select>
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">节点</label>
+    <div class="layui-input-block">
+        <select id="name" lay-filter="name" title="name" name="name" lay-search=""></select>
+    </div>
+</div>
+<hr class="layui-border-green">
+<div id="properties" class="json-editor"></div>

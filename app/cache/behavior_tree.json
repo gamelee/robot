@@ -1,0 +1,43 @@
+{
+    "60d1aa98-80e0-459b-b0ed-2a2916970737": {
+        "id": "60d1aa98-80e0-459b-b0ed-2a2916970737",
+        "title": "一棵行为树",
+        "root": "7f3a0464-4c4d-40c0-b207-20f32be218ae",
+        "properties": {},
+        "nodes": {
+            "7f3a0464-4c4d-40c0-b207-20f32be218ae": {
+                "id": "7f3a0464-4c4d-40c0-b207-20f32be218ae",
+                "name": "Sequence",
+                "category": "composite",
+                "title": "根节点",
+                "properties": {},
+                "children": [
+                    "a6786c7e-5c81-4100-93fb-920e78637593"
+                ]
+            },
+            "a6786c7e-5c81-4100-93fb-920e78637593": {
+                "id": "a6786c7e-5c81-4100-93fb-920e78637593",
+                "title": "发呆",
+                "name": "Nop",
+                "category": "action",
+                "properties": {}
+            }
+        }
+    },
+    "1bd18cea-00e3-482e-9c69-4628e609e248": {
+        "id": "1bd18cea-00e3-482e-9c69-4628e609e248",
+        "title": "1",
+        "root": "dcc96d07-6cfe-4441-ae98-ba8e5ab3915a",
+        "properties": {},
+        "nodes": {
+            "dcc96d07-6cfe-4441-ae98-ba8e5ab3915a": {
+                "id": "dcc96d07-6cfe-4441-ae98-ba8e5ab3915a",
+                "name": "Sequence",
+                "category": "composite",
+                "title": "根节点",
+                "properties": {},
+                "children": []
+            }
+        }
+    }
+}

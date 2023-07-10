@@ -1,0 +1,29 @@
+syntax = "proto3";
+package msg;
+
+enum ID {
+  ID_BEGIN = 0;
+  ID_HEART = 1;    //心跳包
+  ID_END   = 2;
+}
+
+
+//消息Head
+message Head {
+  ID ID = 1;          // 消息Id
+  uint32 BodyLen = 2;          // Body长度
+}
+
+//消息CSReqBody
+message Req {
+  uint64    Seq   = 1;
+  ReqHeart  Heart = 2;
+}
+
+message ReqHeart {
+  int64 Time = 1;
+}
+
+message Rsp {
+  uint64    Seq   = 1;
+}

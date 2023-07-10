@@ -1,0 +1,201 @@
+body,
+html {
+  margin: 0;
+  height: 100%;
+  color: var(--color-5);
+  background-color: var(--color-0);
+}
+.h100 {
+  height: 100%;
+}
+.w100 {
+  width: 100%;
+}
+*::-webkit-scrollbar {
+  width: 0;
+}
+*::-webkit-scrollbar-thumb {
+  background: white;
+}
+*::-webkit-scrollbar-track {
+  background-color: white;
+}
+.custom-btn .layui-btn-group {
+  border: 0;
+}
+.custom-btn .layui-btn-group:first-child {
+  border-left: 0;
+  border-top: 0;
+}
+.custom-btn .layui-btn {
+  padding: 5px 5px 10px;
+  border: 0;
+  height: 30px;
+  line-height: 30px;
+}
+.log {
+  width: 100%;
+  height: 100%;
+}
+.log .log-item {
+  text-overflow: ellipsis;
+  font-size: 16px;
+  width: 100%;
+  white-space: nowrap;
+  padding: 2px 0;
+}
+.log .log-item .head {
+  display: inline-block;
+  background-color: var(--color-0);
+  color: var(--color-5);
+}
+.log .log-item .head .id {
+  width: 285px;
+  overflow: hidden;
+  text-align: left;
+  font-weight: bold;
+  background-color: var(--color-1);
+}
+.log .log-item .head .server {
+  background-color: var(--color-4);
+  color: var(--color-0);
+}
+.log .log-item .content {
+  display: inline-block;
+  background-color: var(--color-0);
+  vertical-align: middle;
+  width: clac(-140%);
+}
+.log .log-item .content .layui-btn:hover {
+  background-color: var(--color-2);
+  color: var(--color-0);
+}
+.menu {
+  /* 设置阴影 */
+  overflow-y: scroll;
+  background-color: var(--color-0);
+  width: 240px;
+}
+.menu .layui-btn-group {
+  border: 0;
+}
+.menu .layui-btn-group:first-child {
+  border-left: 0;
+  border-top: 0;
+}
+.menu .layui-btn {
+  padding: 5px 5px 10px;
+  border: 0;
+  height: 30px;
+  line-height: 30px;
+}
+.menu .servers select {
+  width: 240px;
+  height: 30px;
+  background-color: #ffffff;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #3d3d3d;
+  padding-left: 10px;
+  border: 0 solid #dcdcdc;
+  -webkit-appearance: none;
+}
+.menu .panel {
+  width: 240px;
+}
+.menu .reqs {
+  width: 240px;
+}
+.menu .reqs .layui-btn-group {
+  margin-left: 0;
+}
+.menu .reqs .req {
+  width: 240px;
+  height: 30px;
+  line-height: 30px;
+}
+.menu .reqs .req .server {
+  width: 30px;
+  height: 16px;
+  line-height: 4px;
+  overflow: hidden;
+  text-align: left;
+  border-radius: 2px;
+  background-color: var(--color-4);
+  color: var(--color-0);
+}
+.menu .reqs .req .title {
+  width: 150px;
+  overflow: hidden;
+  text-align: left;
+}
+.menu .behavior-tree {
+  background-color: var(--color-1);
+  width: 240px;
+}
+.menu .behavior-tree .layui-btn {
+  background-color: var(--color-1);
+  color: var(--color-5);
+}
+.menu .behavior-tree .layui-btn:hover {
+  background-color: var(--color-2);
+  color: var(--color-0);
+}
+.menu .behavior-tree .tree {
+  width: 240px;
+}
+.menu .behavior-tree .tree .name {
+  width: 150px;
+  overflow: hidden;
+  text-align: left;
+}
+#js-editor {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 60%;
+  height: 100%;
+  margin: 0 auto;
+  display: block;
+  overflow: hidden;
+}
+.layui-tab.vertical {
+  margin: 0;
+  height: 100%;
+}
+.layui-tab.vertical .layui-tab-title {
+  height: 100%;
+  border-bottom: none !important;
+  overflow-y: scroll;
+  color: var(--color-5);
+  background-color: var(--color-1);
+}
+.layui-tab.vertical .layui-tab-title .layui-this {
+  background: var(--color-2) !important;
+  color: var(--color-0);
+}
+.layui-tab.vertical .layui-tab-title .layui-this:after {
+  border: none !important;
+}
+.layui-tab.vertical .layui-tab-title li {
+  display: list-item !important;
+  line-height: 28px;
+  height: 28px;
+  min-width: 45px;
+  padding: 0;
+}
+.layui-tab.vertical .layui-tab-content {
+  height: 100%;
+  padding: 0;
+  color: var(--color-5);
+  background-color: var(--color-0);
+}
+.layui-tab.vertical .layui-tab-content .layui-tab-item {
+  height: 100%;
+  overflow-y: scroll;
+}
+/*# sourceMappingURL=ddchess.css.map */
