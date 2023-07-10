@@ -49,6 +49,7 @@ type BaseWorker struct {
 
 func (b *BaseWorker) setGame(game *Game) {
 	b.game = game
+	b.Injector.Map(b.game.ui.RunJS)
 }
 
 func NewBaseWorker() *BaseWorker {
