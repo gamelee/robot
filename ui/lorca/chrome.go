@@ -46,14 +46,11 @@ type chrome struct {
 	bindings map[string]bindingFunc
 }
 
-func newChromeWithArgs(chromeBinary string, attach func() error, args ...string) (*chrome, error) {
+func newChromeWithArgs(chromeBinary string, u *ui, args ...string) (*chrome, error) {
 	c := &chrome{
 		id:       2,
 		pending:  map[int]chan result{},
 		bindings: map[string]bindingFunc{},
-	}
-	if attach == nil {
-		attach = func() error { return nil }
 	}
 	c.cmd = exec.Command(chromeBinary, args...)
 	pipe, err := c.cmd.StderrPipe()
@@ -94,9 +91,10 @@ func newChromeWithArgs(chromeBinary string, attach func() error, args ...string)
 				log.Println("attach error", err)
 				return
 			}
-
-			if err = attach(); err != nil {
-				log.Println("on_attach error", err)
+			u.chrome = c
+			err = u.rebind()
+			if err != nil {
+				log.Println("attach error", err)
 				return
 			}
 			time.Sleep(1 * time.Second)
@@ -108,10 +106,7 @@ func newChromeWithArgs(chromeBinary string, attach func() error, args ...string)
 	if err = c.attachPage(args...); err != nil {
 		return nil, err
 	}
-
-	if err = attach(); err != nil {
-		return nil, err
-	}
+	u.chrome = c
 	return c, nil
 }
 

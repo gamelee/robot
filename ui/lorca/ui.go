@@ -24,6 +24,7 @@ type ui struct {
 	chrome *chrome
 	done   chan struct{}
 	tmpDir string
+	bind   map[string]interface{}
 }
 
 var defaultChromeArgs = []string{
@@ -79,9 +80,9 @@ func New(url, dir string, width, height int, attach func() error, customArgs ...
 	args = append(args, fmt.Sprintf("--window-size=%d,%d", width, height))
 	args = append(args, customArgs...)
 	args = append(args, "--remote-debugging-port=0")
-
-	chrome, err := newChromeWithArgs(LocateChrome(), onAttach, args...)
 	done := make(chan struct{})
+	u := &ui{done: done, tmpDir: tmpDir}
+	chrome, err := newChromeWithArgs(LocateChrome(), u, args...)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +91,7 @@ func New(url, dir string, width, height int, attach func() error, customArgs ...
 		chrome.cmd.Wait()
 		close(done)
 	}()
-	return &ui{chrome: chrome, done: done, tmpDir: tmpDir}, nil
+	return u, nil
 }
 
 func (u *ui) Done() <-chan struct{} {
@@ -111,7 +112,18 @@ func (u *ui) Close() error {
 
 func (u *ui) Load(url string) error { return u.chrome.load(url) }
 
+func (u *ui) rebind() error {
+	for name, f := range u.bind {
+		if err := u.Bind(name, f); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func (u *ui) Bind(name string, f interface{}) error {
+	u.bind[name] = f
+
 	v := reflect.ValueOf(f)
 	// f must be a function
 	if v.Kind() != reflect.Func {
@@ -163,7 +175,6 @@ func (u *ui) Bind(name string, f interface{}) error {
 		}
 	})
 }
-
 func (u *ui) Eval(js string) Value {
 	v, err := u.chrome.eval(js)
 	return value{err: err, raw: v}
