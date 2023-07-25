@@ -2,15 +2,13 @@ package ui
 
 import (
 	"fmt"
+	"github.com/gamelee/robot/invoker"
+	"github.com/gamelee/robot/ui/lorca"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"path/filepath"
-	"time"
-
-	"github.com/gamelee/robot/invoker"
-	"github.com/gamelee/robot/ui/lorca"
 )
 
 type WebApp struct {
@@ -54,7 +52,7 @@ func (wa *WebApp) init() {
 			log.Fatal("init cache path", err.Error())
 		}
 	}
-	wa.ui, err = lorca.New("", wa.CachePath, wa.Width, wa.Height, args...)
+	wa.ui, err = lorca.New("", wa.CachePath, wa.Width, wa.Height, wa.Bind, args...)
 	if err != nil {
 		log.Fatal("init ui", err.Error())
 	}
@@ -72,10 +70,6 @@ func (wa *WebApp) Run() (err error) {
 			wa.ui.Close()
 		}
 	}()
-	time.Sleep(time.Second)
-	if err = wa.ui.Bind("GO", wa.invoke); err != nil {
-		return err
-	}
 	wa.ui.Load(wa.fs.Addr())
 	defer func() { _ = wa.ui.Close() }()
 	c := make(chan os.Signal)
@@ -90,6 +84,10 @@ func (wa *WebApp) Run() (err error) {
 	}
 	log.Println("程序退出，原因：", reason)
 	return nil
+}
+
+func (wa *WebApp) Bind() error {
+	return wa.ui.Bind("GO", wa.invoke)
 }
 
 func (wa *WebApp) invoke(call *invoker.Call) *invoker.CallRst {

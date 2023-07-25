@@ -46,13 +46,15 @@ type chrome struct {
 	bindings map[string]bindingFunc
 }
 
-func newChromeWithArgs(chromeBinary string, args ...string) (*chrome, error) {
+func newChromeWithArgs(chromeBinary string, attach func() error, args ...string) (*chrome, error) {
 	c := &chrome{
 		id:       2,
 		pending:  map[int]chan result{},
 		bindings: map[string]bindingFunc{},
 	}
-
+	if attach == nil {
+		attach = func() error { return nil }
+	}
 	c.cmd = exec.Command(chromeBinary, args...)
 	pipe, err := c.cmd.StderrPipe()
 	if err != nil {
@@ -71,6 +73,7 @@ func newChromeWithArgs(chromeBinary string, args ...string) (*chrome, error) {
 	if err = c.connect(m[1]); err != nil {
 		return nil, err
 	}
+
 	go func() {
 		defer func() {
 		}()
@@ -91,6 +94,11 @@ func newChromeWithArgs(chromeBinary string, args ...string) (*chrome, error) {
 				log.Println("attach error", err)
 				return
 			}
+
+			if err = attach(); err != nil {
+				log.Println("on_attach error", err)
+				return
+			}
 			time.Sleep(1 * time.Second)
 			log.Println("lorca reconnecting")
 		}
@@ -101,6 +109,9 @@ func newChromeWithArgs(chromeBinary string, args ...string) (*chrome, error) {
 		return nil, err
 	}
 
+	if err = attach(); err != nil {
+		return nil, err
+	}
 	return c, nil
 }
 
