@@ -78,7 +78,7 @@ func New(url, dir string, width, height int, customArgs ...string) (UI, error) {
 	args = append(args, customArgs...)
 	args = append(args, "--remote-debugging-port=0")
 	done := make(chan struct{})
-	u := &ui{done: done, tmpDir: tmpDir}
+	u := &ui{done: done, tmpDir: tmpDir, bind: map[string]interface{}{}}
 	chrome, err := newChromeWithArgs(LocateChrome(), u, args...)
 	if err != nil {
 		return nil, err
