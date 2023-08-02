@@ -32,11 +32,22 @@ func (bn *BaseNode) Init(conf *NodeConfig, proj *Project) {
 	_ = json.Unmarshal(buf, bn.NodeWorker())
 }
 
-func (bn *BaseNode) Run(injector di.Injector) (interface{}, error) {
-	err := injector.Apply(bn.NodeWorker())
-	if err != nil {
-		bn.Error = fmt.Errorf(`配置节点 "%s" 出错: %w`, bn.conf.Title, bn.Error)
-		return nil, err
-	}
-	return bn.OnStart(injector)
+func (bn *BaseNode) Run(injector di.Injector) (rtn interface{}, err error) {
+	_, err = injector.Invoke(func(emit func(life NodeLife, conf *NodeConfig, msg string)) (interface{}, error) {
+		emit(NodeLifeStart, bn.conf, "")
+		defer func() {
+			if err != nil {
+				emit(NodeLifeError, bn.conf, err.Error())
+			}
+		}()
+		err = injector.Apply(bn.NodeWorker())
+		if err != nil {
+			err = fmt.Errorf(`配置节点 "%s" 出错: %w`, bn.conf.Title, bn.Error)
+			return nil, err
+		}
+		rtn, err = bn.OnStart(injector)
+		emit(NodeLifeFinish, bn.conf, "")
+		return rtn, err
+	})
+	return
 }
