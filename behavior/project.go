@@ -31,15 +31,15 @@ func (proj *Project) Init(conf ProjectConfig) error {
 	return nil
 }
 
-func (proj *Project) GetTree(id string) *Tree {
+func (proj *Project) GetTree(idOrTitle string) *Tree {
 
-	tree, ok := proj.trees.Load(id)
+	tree, ok := proj.trees.Load(idOrTitle)
 	if ok {
 		return tree.(*Tree)
 	}
 	var rTree *Tree
 	proj.trees.Range(func(_, tree interface{}) bool {
-		if tree.(*Tree).Conf.ID == id {
+		if tree.(*Tree).Conf.Title == idOrTitle {
 			rTree = tree.(*Tree)
 			return false
 		}
