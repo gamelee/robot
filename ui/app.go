@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/gamelee/robot/invoker"
@@ -45,6 +46,9 @@ func (wa *WebApp) init() {
 	log.Printf("配置信息: %#v", wa.Config)
 	args = append(args, "--remote-allow-origins=*")
 	args = append(args, "--disable-automation")
+	if len(wa.Config.Extension) != 0 {
+		args = append(args, "--load-extension="+strings.Join(wa.Config.Extension, ","))
+	}
 	go wa.fs.Run()
 
 	var err error

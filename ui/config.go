@@ -4,6 +4,7 @@ type Config struct {
 	Width     int
 	Height    int
 	CachePath string
+	Extension []string
 	AssetPath string
 	Name      string
 	Args      []string
@@ -33,6 +34,13 @@ type WithCachePath string
 
 func (l WithCachePath) Apply(config *Config) error {
 	config.CachePath = string(l)
+	return nil
+}
+
+type WithExtensions []string
+
+func (l WithExtensions) Apply(config *Config) error {
+	config.Extension = l
 	return nil
 }
 
