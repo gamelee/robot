@@ -20,6 +20,7 @@ type NodeEvent struct {
 	Action NodeLife
 	Conf   *NodeConfig
 	Msg    string
+	Data   interface{}
 }
 
 type Tree struct {
@@ -42,9 +43,9 @@ func (tree *Tree) GetRoot() IBaseNode {
 	return tree.Root
 }
 
-func (tree *Tree) Emit(life NodeLife, node *NodeConfig, msg string) bool {
+func (tree *Tree) Emit(life NodeLife, node *NodeConfig, msg string, data interface{}) bool {
 	select {
-	case tree.nodeEvent <- &NodeEvent{Action: life, Conf: node, Msg: msg}:
+	case tree.nodeEvent <- &NodeEvent{Action: life, Conf: node, Msg: msg, Data: data}:
 		return true
 	default:
 		return false
@@ -66,10 +67,10 @@ func (tree *Tree) Load(data *TreeConfig, maps *RegisterStructMaps) error {
 		}
 		node := iNode.(IBaseNode)
 		node.NodeWorker(node.(IBaseWorker))
-		tree.Emit(NodeLifeCreated, &conf, "")
+		tree.Emit(NodeLifeCreated, &conf, "", nil)
 		node.Init(&conf, tree.proj)
 		nodes[id] = node
-		tree.Emit(NodeLifeInit, &conf, "")
+		tree.Emit(NodeLifeInit, &conf, "", nil)
 	}
 
 	// 连接节点

@@ -33,11 +33,11 @@ func (bn *BaseNode) Init(conf *NodeConfig, proj *Project) {
 }
 
 func (bn *BaseNode) Run(injector di.Injector) (rtn interface{}, err error) {
-	_, _ = injector.Invoke(func(emit func(life NodeLife, conf *NodeConfig, msg string) bool) (interface{}, error) {
-		emit(NodeLifeStart, bn.conf, "")
+	_, _ = injector.Invoke(func(emit func(life NodeLife, conf *NodeConfig, msg string, data interface{}) bool) (interface{}, error) {
+		emit(NodeLifeStart, bn.conf, "", nil)
 		defer func() {
 			if err != nil {
-				emit(NodeLifeError, bn.conf, err.Error())
+				emit(NodeLifeError, bn.conf, err.Error(), nil)
 			}
 		}()
 		err = injector.Apply(bn.NodeWorker())
@@ -46,7 +46,7 @@ func (bn *BaseNode) Run(injector di.Injector) (rtn interface{}, err error) {
 			return nil, err
 		}
 		rtn, err = bn.OnStart(injector)
-		emit(NodeLifeFinish, bn.conf, "")
+		emit(NodeLifeFinish, bn.conf, "", rtn)
 		return rtn, err
 	})
 	return
