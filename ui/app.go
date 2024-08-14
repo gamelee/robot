@@ -115,10 +115,15 @@ func (wa *WebApp) invoke(call *invoker.Call) *invoker.CallRst {
 func (wa *WebApp) CallJS(call *invoker.Call) *invoker.CallRst {
 	rst := new(invoker.CallRst)
 	val := wa.ui.Eval(fmt.Sprintf("CallJS(%s)", call))
+	if val.Err() != nil {
+		rst.Code = invoker.CodeFailed
+		rst.Message = fmt.Sprintf("CallJS failed:%w", val.Err().Error())
+		return rst
+	}
 	err := val.To(rst)
 	if err != nil {
 		rst.Code = invoker.CodeFailed
-		rst.Message = err.Error()
+		rst.Message = fmt.Sprintf("Parse Result failed:%s", err.Error())
 	}
 	return rst
 }
