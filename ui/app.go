@@ -35,8 +35,8 @@ func NewApp(opts ...Option) *WebApp {
         FuncManager: invoker.NewFuncManager(),
     }
 
-    if cfg.FS != nil {
-        this.fs = NewFileServer(cfg.FS, cfg.Port)
+    if cfg.FileSystem != nil {
+        this.fs = NewFileServer(cfg.FileSystem, cfg.Port)
     } else {
         this.fs = NewFileServer(http.Dir(cfg.AssetPath), cfg.Port)
     }

@@ -5,15 +5,15 @@ import (
 )
 
 type Config struct {
-    Width     int
-    Height    int
-    CachePath string
-    Extension []string
-    AssetPath string
-    Name      string
-    Args      []string
-    Port      int
-    FS        http.FileSystem
+    Width      int
+    Height     int
+    CachePath  string
+    Extension  []string
+    AssetPath  string
+    Name       string
+    Args       []string
+    Port       int
+    FileSystem http.FileSystem
 }
 
 type Option interface {
@@ -67,5 +67,14 @@ type WithPort int
 
 func (p WithPort) Apply(config *Config) error {
     config.Port = int(p)
+    return nil
+}
+
+type WithFileSystem struct {
+    http.FileSystem
+}
+
+func (p *WithFileSystem) Apply(config *Config) error {
+    config.FileSystem = p.FileSystem
     return nil
 }
