@@ -5,14 +5,15 @@ import (
 )
 
 type Config struct {
-    Width      int
-    Height     int
-    CachePath  string
-    Extension  []string
-    AssetPath  string
-    Name       string
-    Args       []string
-    Port       int
+    Width     int
+    Height    int
+    CachePath string
+    Extension []string
+    AssetPath string
+    Name      string
+    Args      []string
+    Port      int
+
     FileSystem http.FileSystem
 }
 
@@ -72,9 +73,10 @@ func (p WithPort) Apply(config *Config) error {
 
 type WithFileSystem struct {
     http.FileSystem
+    RootPath string
 }
 
-func (p *WithFileSystem) Apply(config *Config) error {
+func (p WithFileSystem) Apply(config *Config) error {
     config.FileSystem = p.FileSystem
     return nil
 }
