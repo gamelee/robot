@@ -86,7 +86,7 @@ func (wa *WebApp) Run() (err error) {
     if err = wa.ui.Bind("GO", wa.invoke); err != nil {
         return err
     }
-    wa.ui.Load(fmt.Sprintf("http:127.0.0.1:%d/%s", wa.fs.port, wa.AssetPath))
+    wa.ui.Load(fmt.Sprintf("http:127.0.0.1:%d/%s", wa.fs.port, wa.Index))
     defer func() { _ = wa.ui.Close() }()
     c := make(chan os.Signal)
     signal.Notify(c, os.Interrupt)

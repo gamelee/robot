@@ -14,6 +14,7 @@ type Config struct {
     Args      []string
     Port      int
 
+    Index      string
     FileSystem http.FileSystem
 }
 
@@ -40,6 +41,13 @@ type WithCachePath string
 
 func (l WithCachePath) Apply(config *Config) error {
     config.CachePath = string(l)
+    return nil
+}
+
+type WithIndex string
+
+func (l WithIndex) Apply(config *Config) error {
+    config.Index = string(l)
     return nil
 }
 
