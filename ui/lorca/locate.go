@@ -20,18 +20,18 @@ func LocateChrome() string {
 			"/usr/bin/chromium-browser",
 		}
 	case "windows":
-		paths = append([]string{
-			os.Getenv("LocalAppData") + "/Google/Chrome/Application/chrome.exe",
-			os.Getenv("ProgramFiles") + "/Google/Chrome/Application/chrome.exe",
-			os.Getenv("ProgramFiles(x86)") + "/Google/Chrome/Application/chrome.exe",
-			os.Getenv("LocalAppData") + "/Chromium/Application/chrome.exe",
-			os.Getenv("ProgramFiles") + "/Chromium/Application/chrome.exe",
-			os.Getenv("ProgramFiles(x86)") + "/Chromium/Application/chrome.exe",
-		},
+		paths = append(
 			[]string{
 				os.Getenv("LocalAppData") + "/Microsoft/Edge/Application/msedge.exe",
 				os.Getenv("ProgramFiles") + "/Microsoft/Edge/Application/msedge.exe",
 				os.Getenv("ProgramFiles(x86)") + "/Microsoft/Edge/Application/msedge.exe",
+			}, []string{
+				os.Getenv("LocalAppData") + "/Google/Chrome/Application/chrome.exe",
+				os.Getenv("ProgramFiles") + "/Google/Chrome/Application/chrome.exe",
+				os.Getenv("ProgramFiles(x86)") + "/Google/Chrome/Application/chrome.exe",
+				os.Getenv("LocalAppData") + "/Chromium/Application/chrome.exe",
+				os.Getenv("ProgramFiles") + "/Chromium/Application/chrome.exe",
+				os.Getenv("ProgramFiles(x86)") + "/Chromium/Application/chrome.exe",
 			}...)
 	default:
 		paths = []string{
